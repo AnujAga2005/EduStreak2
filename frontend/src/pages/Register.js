@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../utils/api";
 
 const Register = () => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -11,15 +11,15 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("/api/v1/user/register", { username, email, password });
+      await api.post("/api/v1/user/register", { name, email, password });
       alert("Registration successful!");
       navigate("/login");
-    } catch (error) {
+    } catch (err) {
       // More detailed error alert
       const message =
-        error.response?.data?.message || error.response?.data?.error || error.message;
+        err.response?.data?.message || err.response?.data?.error || err.message;
       alert(`Registration failed: ${message}`);
-      console.error("Registration Error:", error);
+      console.error("Registration Error:", err);
     }
   };
 
@@ -31,8 +31,8 @@ const Register = () => {
         <input
           type="text"
           placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="w-full mb-3 px-4 py-2 border rounded"
           required
         />
